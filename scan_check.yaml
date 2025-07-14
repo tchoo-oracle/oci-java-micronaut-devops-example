@@ -17,8 +17,6 @@ steps:
       echo "Compartment_ID: $COMPARTMENT_ID"
       echo "REPO_NAME: $REPO_NAME"
       echo "BUILDRUN_HASH: $BUILDRUN_HASH"
-      listScanStatus=`oci vulnerability-scanning container scan result list --compartment-id ${COMPARTMENT_ID}`
-      echo "ListScanStatus: $listScanStatus"
       scanstatus=`oci vulnerability-scanning container scan result list --compartment-id ${COMPARTMENT_ID} --repository ${REPO_NAME} --image ${BUILDRUN_HASH}|grep 'highest-problem-severity'|cut -f 2 -d ':'|xargs|cut -f 1 -d ','`
 
       if [[ ${scanstatus} != "${SCAN_CHECK_BASELINE}" ]]
